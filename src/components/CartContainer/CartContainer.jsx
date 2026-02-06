@@ -34,7 +34,7 @@ function CartContainer() {
 
         const user = { name, email, phone, address };
 
-        //createOrder(user, cart, total);
+        createOrder(user, cart, total);
         deleteAll();
         displayMsg("Se compro el producto correctamente");
     };
