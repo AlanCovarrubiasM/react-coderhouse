@@ -1,16 +1,37 @@
-# React + Vite
+# SailorDental - E-commerce React + Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto de tienda online desarrollada con **React js** y **Firebase** para el curso de CoderHouse de React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔧 Tecnologías usadas
 
-## React Compiler
+- **React**: Librería para construir interfaces de usuario interactivas.
+- **React Router**: Gestión de rutas y navegación entre componentes.
+- **Bootstrap**: Framework CSS para crear interfaces responsive y modernas.
+- **React Bootstrap**: Componentes Bootstrap reescritos en React.
+- **Firebase**: Backend para almacenar productos, crear pedidos y autenticación de usuarios.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Listado de productos**  
+- Los productos se obtienen desde Firestore en tiempo real.
+
+**Filtro por categoría**  
+- Las categorías de productos se cargan desde Firestore, y cada categoría muestra productos específicos. Al hacer clic en una categoría, se actualizan los productos en pantalla.
+
+**Detalle de producto**  
+- Muestra una vista detallada de cada producto. Esta vista incluye una imagen, nombre, descripción, y precio.
+- Los usuarios pueden seleccionar la cantidad que desean comprar.
+
+---
+
+## Uso de rutas
+
+- `/` → **Home**: Página principal que muestra todos los productos de la tienda.
+- `/categoria/:categoria` → **Productos filtrados por categoría**: Página que muestra los productos de una categoría específica.
+- `/item/:id` → **Detalle del producto**: Página que muestra el detalle de un solo producto, con la opción de agregar al carrito.
+- `/carrito` → **Carrito de compras**: Página que muestra los productos agregados al carrito.
+- `/checkout` → **Formulario de compra**: Página para que el usuario ingrese sus datos para completar la compra.

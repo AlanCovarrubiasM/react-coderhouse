@@ -1,13 +1,25 @@
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 
-function ItemCount(){
-    const[cantidad, setCantidad] = useState(0);
+function ItemCount({quantity, onChange}){
+
+    const incrementar = () =>{
+        const nueva = quantity + 1;
+        onChange(nueva);
+    }
+
+    const decrementar = () =>{
+        const nueva = quantity > 0 ? quantity - 1 : 0
+        if (typeof onChange === "function")
+            onChange(nueva);
+
+    }
+
     return(
         <div className="d-flex align-items-center justify-content-center p-3">
-            <Button className="rounded-circle m-3" style={{ width: "50px", height: "50px" }} variant="secondary" onClick={() => setCantidad(cantidad > 0 ? cantidad - 1 : 0)}>-</Button>
-                <div>{cantidad}</div>
-            <Button className="rounded-circle m-3" style={{ width: "50px", height: "50px" }} variant="secondary" onClick={() => setCantidad(cantidad + 1)}>+</Button>
+            <Button className="rounded-circle m-3" style={{ width: "50px", height: "50px" }} variant="secondary" onClick={decrementar}>-</Button>
+                <div>{quantity}</div>
+            <Button className="rounded-circle m-3" style={{ width: "50px", height: "50px" }} variant="secondary" onClick={incrementar}>+</Button>
         </div>
     );
 }

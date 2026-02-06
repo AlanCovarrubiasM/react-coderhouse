@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 function Item({product}){
     return (
         <Card style={{ width: '18rem' }} className="h-100">
-            <Card.Img variant="top" src={product.images[0]} />
+            <Card.Img variant="top" src={product.data.img} />
             <Card.Body className="d-flex flex-column">
-                <Card.Title>{product.title}</Card.Title>
+                <Card.Title>{product.data.name}</Card.Title>
 
                 <Card.Text className="flex-grow-1">
-                {product.description}
+                {product.data.description}
                 </Card.Text>
 
                 <Button as={Link} to={`/producto/${product.id}`} variant="primary" className="mt-auto">

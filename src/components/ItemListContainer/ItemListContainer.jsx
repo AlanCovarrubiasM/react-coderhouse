@@ -1,30 +1,29 @@
 import { useState, useEffect } from "react";
 import ItemList from "../../ItemList/ItemList";
 import { useParams } from "react-router-dom";
+import { getProducts, getCategory } from "../../firebase/db";
 
 function ItemListContainer(props){
-    const{categoria} = useParams();  
+    const{category} = useParams();  
     const [products, setProducts] = useState([]);
 
     useEffect(() =>{
-        const url = categoria
-                ? `https://dummyjson.com/products/category/${categoria}`
-                : 'https://dummyjson.com/products';
-
-        console.log(url);
         const fetchProducts  = async () =>{
             try {
-                const response = await fetch(url);
-                if (!response.ok) 
-                    throw new Error("Error en la petición");
-                const result = await response.json();
-                setProducts(result.products);
+                let result;
+                if (category) {
+                result = await getCategory(category);
+                } else {
+                result = await getProducts();
+                }
+
+                setProducts(result);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchProducts();
-    }, [categoria]);
+    }, [category]);
 
     return(
         <main className="p-5">
