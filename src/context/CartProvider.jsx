@@ -24,10 +24,14 @@ function CartProvider({ children }) {
 
 const deleteToCart = (id) => {
     setCart(prevCart => prevCart.filter(item => item.id !== id));
-  }
+}
+
+const deleteAll = () => {
+    setCart([]);
+}
 
   return (
-    <CartContext.Provider value={{ cart, getQuantity, addToCart, deleteToCart}}>
+    <CartContext.Provider value={{ cart, getQuantity, addToCart, deleteToCart, deleteAll}}>
       {children}
     </CartContext.Provider>
   );
