@@ -9,22 +9,14 @@ import Form from 'react-bootstrap/Form';
 import CartItem from "../CartItem/CartItem";
 
 function CartContainer() {
-    const { cart, getQuantity, deleteAll } = useContext(CartContext);
-    const [total, setTotal] = useState(0);
-
-    useEffect(() => {
-        const totalCalc = cart.reduce((acc, item) => {
-            return acc + item.data.price * item.quantity;
-        }, 0);
-        setTotal(totalCalc);
-    }, [cart]);
+    const { cart, getQuantity, deleteAll, getSubtotal, getTotal} = useContext(CartContext);
+    console.log()
 
     const displayMsg = (msg) => {
-        console.log("Entra");
         toast(msg);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const name = e.target.name.value;
@@ -33,20 +25,29 @@ function CartContainer() {
         const address = e.target.address.value;
 
         const user = { name, email, phone, address };
-
-        createOrder(user, cart, total);
-        deleteAll();
-        displayMsg("Se compro el producto correctamente");
+        try{
+            const id = await createOrder(user, cart, getTotal());
+            console.log("El id de compra es: ", id);
+            deleteAll();
+        
+            setTimeout(() => {
+                if(id != 0){
+                    displayMsg("Se compro el producto correctamente");
+                    displayMsg("Su id de compra es: " + id);
+                }
+            }, 1000);
+        }
+        catch{
+            displayMsg("Error al comprar el producto");
+        }
     };
 
-    if (getQuantity < 1) {
+    if (getQuantity() < 1) {
         return (
             <>
                 <h2 className="position-absolute top-50 start-50 translate-middle">No hay productos en el carrito...</h2>
                 <ToastContainer />
             </>
-                
-
         );
     }
 
@@ -58,17 +59,20 @@ function CartContainer() {
                     {cart.map(item => (
                         <CartItem key={item.id} item={item} />
                     ))}
+                    <Button variant="danger" onClick={() => deleteAll()}>
+                        Eliminar Prdocutos
+                    </Button>
                 </section>
                 <section className="ml-sm-5 width-avilable" style={{ width: "30%" }}>
                     <div className="firstColor p-3">
                         <p className="mb-4 h4">Cotización de productos</p>
                         <div className="d-flex justify-content-between">
                             <p className="h5">Subtotal:</p>
-                            <p className="h5">${total}</p>
+                            <p className="h5">${getSubtotal()}</p>
                         </div>
                         <div className="d-flex justify-content-between">
                             <p className="h5">Total:</p>
-                            <p className="h5">${total + (total * 0.16)}</p>
+                            <p className="h5">${getTotal()}</p>
                         </div>
                         <p className="font-weight-light text-secondary">Estos productos se agregan con el IVA.</p>
 
@@ -78,7 +82,7 @@ function CartContainer() {
                             <Form.Label>Correo</Form.Label>
                             <Form.Control required type="email" name="email" placeholder="aaaa@aaa.com" />
                             <Form.Label>Celular</Form.Label>
-                            <Form.Control required type="number" name="phone" placeholder="3121415481" />
+                            <Form.Control required type="text" name="phone" placeholder="3121415481" />
                             <Form.Label>Dirección</Form.Label>
                             <Form.Control required type="text" name="address" placeholder="Loma Bonita" />
                         

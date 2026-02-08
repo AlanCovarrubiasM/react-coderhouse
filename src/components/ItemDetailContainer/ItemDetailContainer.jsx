@@ -29,15 +29,6 @@ function ItemDetailContainer() {
     fetchProduct();
   }, [id]);
 
-  useEffect(() => {
-    if (!data) return;
-
-    const existingProduct = cart.find(item => item.id === data.id);
-    if (existingProduct) {
-      setQuantity(existingProduct.quantity);
-    }
-  }, [cart, data]);
-
   if (!data) return <p className="p-5">Cargando producto...</p>;
 
   return (

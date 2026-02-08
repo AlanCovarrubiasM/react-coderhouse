@@ -4,7 +4,11 @@ import { CartContext } from "./CartContext";
 function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const getQuantity = cart.length;
+  const getQuantity = () => cart.reduce((acc, current) => acc + current.quantity, 0);
+
+  const getSubtotal =  () => cart.reduce((acc, item) => acc + item.data.price * item.quantity, 0);
+
+  const getTotal = () => getSubtotal() + (getSubtotal() * 0.16);
 
   const addToCart = (product, quantityToAdd = 1) => {
     setCart(prevCart => {
@@ -31,7 +35,7 @@ const deleteAll = () => {
 }
 
   return (
-    <CartContext.Provider value={{ cart, getQuantity, addToCart, deleteToCart, deleteAll}}>
+    <CartContext.Provider value={{ cart, getQuantity, getSubtotal, getTotal, addToCart, deleteToCart, deleteAll}}>
       {children}
     </CartContext.Provider>
   );

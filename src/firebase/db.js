@@ -51,9 +51,11 @@ export const createOrder =  async(user, items, total) => {
     try{
         const docRef = await addDoc(collection(db, "orders"), order)
         console.log("Se creo el documento: ", docRef.id)
+        return docRef.id;
     }
-    catch{
-        console.log("Error al guardar en db")
+    catch(error){
+        console.log("Error al guardar en db: ", error);
+        return 0;
     }
 };
 
